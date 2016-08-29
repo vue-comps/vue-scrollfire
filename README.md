@@ -38,6 +38,8 @@ For examples see [`dev/`](dev/).
 | Name |  description |
 | ---:| --- |
 | entered |  will be fired on entering of viewport |
+| progress |  will be fired on scrolling of viewport |
+| left |  will be fired on leaving of viewport |
 
 # Development
 Clone repository.

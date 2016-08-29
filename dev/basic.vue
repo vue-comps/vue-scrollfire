@@ -3,7 +3,7 @@
   a(href="https://github.com/vue-comps/vue-comps-scrollspy/blob/master/dev/basic.vue") source
   p open console and scroll down
   div(style="margin-top:800px;width:200px;height:200px;background-color:blue") div
-    scrollfire(@entered="entered")
+    scrollfire(@entered="entered", @left="left", @progress="progress", multiple=true)
     scrollfire(@entered="enteredOffset",:offset=200)
     scrollfire(@entered="enteredNegativOffset",:offset=-200)
     scrollfire(@entered="enteredAfter",:after=5000)
@@ -15,6 +15,8 @@ module.exports =
     "scrollfire": require "../src/scrollfire.vue"
   methods:
     entered: -> console.log "div entered view"
+    left: -> console.log "div left view"
+    progress: (pos) -> console.log("div on viewport, top:" + pos.top + " bottom:" + pos.bottom)
     enteredOffset: -> console.log "div entered view 200px before"
     enteredNegativOffset: -> console.log "div will enter view in 200px"
     enteredAfter: -> console.log "div entered view 5sec before"
