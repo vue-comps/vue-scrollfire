@@ -30,7 +30,7 @@ module.exports =
       bottom = @$el.getBoundingClientRect().bottom+@offset
       if (@lastPos.top > 0 and top <= 0) || (@lastPos.bottom < 0 and bottom >= 0)
         if @after > 0
-          setTimeout (=>@$emit("left")),@after
+          setTimeout (=>@$emit("entered")),@after
         else
           @$emit("entered")
 
