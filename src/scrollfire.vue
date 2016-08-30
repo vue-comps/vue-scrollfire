@@ -1,6 +1,7 @@
 // out: ..
 <template lang="jade">
 span
+  slot
 </template>
 
 <script lang="coffee">
@@ -22,22 +23,34 @@ module.exports =
     require("vue-mixins/getViewportSize")
     require("vue-mixins/onWindowResize")
   ]
+
   methods:
     processScroll: ->
-      pos = @$el.getBoundingClientRect().top+@offset-@height
-      if @lastPos > 0 and pos <= 0
+      top = @$el.getBoundingClientRect().top+@offset-@height
+      bottom = @$el.getBoundingClientRect().bottom+@offset
+      if (@lastPos.top > 0 and top <= 0) || (@lastPos.bottom < 0 and bottom >= 0)
         if @after > 0
           setTimeout (=>@$emit("entered")),@after
         else
           @$emit("entered")
-        setTimeout(@disposeListener,1) unless @multiple
-      @lastPos = pos
+
+      if (@lastPos.bottom > 0 and bottom <= 0) || (@lastPos.top < 0 and top >= 0)
+        if @after > 0
+          setTimeout (=>@$emit("left")),@after
+        else
+          @$emit("left")
+        setTimeout(@distopeListener,1) unless @multiple
+
+      if (top < 0 and bottom > 0)
+        @$emit("progress", {top: -top, bottom: bottom})
+
+      @lastPos = {top: top, bottom: bottom}
     getHeight: ->
       @height = @getViewportSize().height
   compiled: ->
-    @lastPos = Number.MAX_VALUE
+    @lastPos = {top: Number.MAX_VALUE, bottom: Number.MAX_VALUE}
     @getHeight()
     @onWindowResize @getHeight
-    @disposeListener = @onWindowScroll @processScroll
+    @distopeListener = @onWindowScroll @processScroll
 
 </script>
