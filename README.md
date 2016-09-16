@@ -43,6 +43,12 @@ entered |  will be fired on entering of viewport
 progress |  will be fired on scrolling of viewport. Argument: `{top,bottom}`
 left |  will be fired on leaving of viewport
 
+## Changelog
+
+- 1.0.0
+now has `left` event  
+uses parent for size calculation  
+
 # Development
 Clone repository.
 ```sh
