@@ -65,12 +65,13 @@ module.exports =
     getHeight: ->
       @height = @getViewportSize().height
   compiled: ->
+
+
+  mounted: -> @$nextTick ->
     @state = {entered:false,left:false}
     @getHeight()
     @onWindowResize @getHeight
     @disposeListener = @onWindowScroll @processScroll
-
-  ready: ->
     @target = if @ignoreParent then @$el else @$el.parentElement
     @processScroll()
 

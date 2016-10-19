@@ -13,7 +13,7 @@ describe "scrollfire", ->
   describe "basic env", ->
 
     before (done) ->
-      basic.compiled = ->
+      basic.created = ->
         @entered = chai.spy("entered")
         @left = chai.spy("left")
         @progress = chai.spy("progress")
@@ -32,7 +32,7 @@ describe "scrollfire", ->
       #unloadComp(env)
 
     it "should work on scrolling down", (done) ->
-      box = env.$els.div.getBoundingClientRect()
+      box = env.$refs.div.getBoundingClientRect()
       top = box.top
       bottom = box.bottom
       timeoutCalled = false
@@ -63,26 +63,27 @@ describe "scrollfire", ->
       timeoutCalled = false
       finished = false
       scroll 4000, ->
-        env.$destroy(true)
+        document.body.removeChild(env.$el)
+        env.$destroy()
         env = loadComp(basic)
-        env.$nextTick ->
+        env.$nextTick -> env.$nextTick ->
           env.initial.should.be.called.once
           env.initialLeft.should.be.called.once
-          scroll env.$els.div.offsetTop+env.$els.div.offsetHeight+200, ->
+          scroll env.$refs.div.offsetTop+env.$refs.div.offsetHeight+200, ->
             env.enteredNegativOffset.should.be.called.once
-            scroll env.$els.div.offsetTop+env.$els.div.offsetHeight, ->
+            scroll env.$refs.div.offsetTop+env.$refs.div.offsetHeight, ->
               env.entered.should.be.called.once
               setTimeout (->
                 env.enteredAfter.should.be.called.once
                 timeoutCalled = true
                 done() if finished
                 ),1010
-              scroll env.$els.div.offsetTop + env.$els.div.offsetHeight - 200, ->
+              scroll env.$refs.div.offsetTop + env.$refs.div.offsetHeight - 200, ->
                 env.enteredOffset.should.be.called.once
                 env.progress.should.be.called.once
-                scroll env.$els.div.offsetTop - vp.height, ->
+                scroll env.$refs.div.offsetTop - vp.height, ->
                   env.left.should.be.called.once
-                  scroll env.$els.div.offsetTop - vp.height - 200, ->
+                  scroll env.$refs.div.offsetTop - vp.height - 200, ->
                     env.left.should.be.called.once
                     finished = true
                     done() if timeoutCalled

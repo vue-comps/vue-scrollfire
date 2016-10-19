@@ -9,6 +9,8 @@ Fires an event on a specific scroll position
 
 ```sh
 npm install --save-dev vue-scrollfire
+// vue@1.0
+npm install --save-dev vue-scrollfire@1
 ```
 or include `build/bundle.js`.
 
@@ -44,8 +46,11 @@ progress |  will be fired on scrolling of viewport. Argument: `{top,bottom}`
 left |  will be fired on leaving of viewport
 
 ## Changelog
+- 2.0.0  
+added vue 2.0.0 compatibility  
+`Number` props must be set like this `:after=100`, this isn't working anymore: `after=100`  
 
-- 1.0.0
+- 1.0.0  
 now has `left` event  
 uses parent for size calculation  
 

@@ -3,11 +3,11 @@
   a(href="https://github.com/vue-comps/vue-comps-scrollspy/blob/master/dev/basic.vue") source
   p open console and scroll down
   p try reloading the page at the bottom to see the effect of `initial` prop and scroll up
-  div(style="margin-top:1500px;width:200px;height:200px;background-color:blue",v-el:div) div
+  div(style="margin-top:1500px;width:200px;height:200px;background-color:blue",ref="div") div
     scrollfire(@entered="entered", @left="left", @progress="progress", multiple)
-    scrollfire(@entered="enteredOffset",@left="leftOffset",offset=200)
-    scrollfire(@entered="enteredNegativOffset",offset=-200)
-    scrollfire(@entered="enteredAfter",after=1000)
+    scrollfire(@entered="enteredOffset",@left="leftOffset",:offset=200)
+    scrollfire(@entered="enteredNegativOffset",:offset=-200)
+    scrollfire(@entered="enteredAfter",:after=1000)
     scrollfire(@entered="initial", @left="initialLeft", initial)
 </template>
 
